@@ -1,11 +1,12 @@
 export default function Start() {
     return (
         <div className="container">
-            <div className="row">
-                <div className="col-6">
-                    <button className="btn btn-success">Start</button>
-                </div>
+            <div className="text-center mb-4">
+                <img src="wordle-logo.png" />
+            </div>
+            <div className="text-center pt-4 mt-4">
+                <button className="btn btn-success">Start</button>
             </div>
         </div>
-    )
+    );
 }

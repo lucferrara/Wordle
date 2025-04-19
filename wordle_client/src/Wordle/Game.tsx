@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Instructions from "./Instructions";
 import Tiles from "./Tiles";
+import * as client from "./client.ts";
 
 export default function Game() {
+    const [answer, setAnswer] = useState("");
+    const generateRandomWord = async () => {
+        const word = await client.getRandomWord(); 
+        setAnswer(word)
+    }
+
     const [showInstructions, setShowInstructions] = useState(true);
 
     const [words, setWords] = useState(Array(6).fill(null).map(() => ["", "", "", "", ""]));
@@ -19,10 +26,15 @@ export default function Game() {
         updated[index] = newColors;
         setColors(updated); 
     }
+
+    useEffect(() => {
+        generateRandomWord();
+    });
+
     return (
         <div>
             <Instructions show={showInstructions} onClose={() => setShowInstructions(false)} />
-            {words.map((word, i) => (
+            {answer && words.map((word, i) => (
                 <div className="mb-2" key={i}>
                 <Tiles
                     values={word}
@@ -31,6 +43,7 @@ export default function Game() {
                 />
                 </div>
             ))}
+            {!answer && <h6>Error, please refresh the page.</h6>}
             
         </div>
     )

@@ -2,6 +2,18 @@ import express from 'express';
 import cors from 'cors';
 import session from 'express-session';
 import 'dotenv/config';
+import mysql from 'mysql2';
+
+const db_conn = mysql.createConnection({
+	host: process.env.DB_HOST || "localhost",
+	user: process.env.DB_USER || "root",
+	password: process.env.DB_PASSWORD || "",
+});
+
+db_conn.connect(function(err) {
+	if (err) throw err;
+	console.log("Connected to DB");
+  });
 
 const app = express(); 
 

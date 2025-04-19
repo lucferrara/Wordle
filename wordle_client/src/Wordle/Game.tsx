@@ -4,10 +4,10 @@ import Tiles from "./Tiles";
 import * as client from "./client.ts";
 
 export default function Game() {
-    const [answer, setAnswer] = useState("");
-    const generateRandomWord = async () => {
-        const word = await client.getRandomWord(); 
-        setAnswer(word)
+    const [gameId, setGameId] = useState("");
+    const startGame = async () => {
+        const id = await client.startGame(); 
+        setGameId(id)
     }
 
     const [showInstructions, setShowInstructions] = useState(true);
@@ -28,13 +28,13 @@ export default function Game() {
     }
 
     useEffect(() => {
-        generateRandomWord();
-    });
+        startGame();
+    }, []);
 
     return (
         <div>
             <Instructions show={showInstructions} onClose={() => setShowInstructions(false)} />
-            {answer && words.map((word, i) => (
+            {gameId && words.map((word, i) => (
                 <div className="mb-2" key={i}>
                 <Tiles
                     values={word}
@@ -43,7 +43,7 @@ export default function Game() {
                 />
                 </div>
             ))}
-            {!answer && <h6>Error, please refresh the page.</h6>}
+            {!gameId && <h6>Loading...</h6>}
             
         </div>
     )

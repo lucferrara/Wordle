@@ -10,7 +10,7 @@ const db_conn = mysql.createConnection({
 	user: process.env.DB_USER || "root",
 	password: process.env.DB_PASSWORD || "",
 	database: "wordle",
-});
+}).promise();
 
 db_conn.connect(function(err) {
 	if (err) throw err;

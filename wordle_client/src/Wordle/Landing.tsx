@@ -9,7 +9,9 @@ export default function Start() {
                 <h3>Get 6 chances to guess a 5-letter word.</h3>
             </div>
             <div className="text-center pt-4 mt-4">
-                <button className="btn btn-success">Start</button>
+                <a href="#/play" className="nav-link">
+                    <button className="btn btn-success">Play</button>
+                </a>
             </div>
         </div>
     );

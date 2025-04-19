@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function Tile({value, values, setValues, index}: {value: string, values: any, setValues: any, index: number}) {
+export default function Tile({value, values, setValues, index, color}: {value: string, values: any, setValues: any, index: number, color: string}) {
     const [inputValue, setInputValue] = useState(value);
     
     const handleChange = (c: string) => { 
@@ -15,10 +15,15 @@ export default function Tile({value, values, setValues, index}: {value: string, 
 
     return (
     <input type="text" 
-            maxLength={1} className="form-control" 
+            maxLength={1} className={`form-control 
+                                    ${color == "Green" ? "bg-success" : ""}
+                                    ${color == "Yellow" ? "bg-warning" : ""}
+                                    ${color == "Gray" ? "bg-secondary" : ""}
+                                    ${color == "W" ? "bg-light" : ""}`}
             style={{width: '60px', height: '60px', textAlign: "center", textTransform: 'uppercase'}}
             value={inputValue}
-            onChange={(e) => handleChange(e.target.value)}/>
+            onChange={(e) => handleChange(e.target.value)}
+            disabled={color ? true : false}/>
     )
     
 }

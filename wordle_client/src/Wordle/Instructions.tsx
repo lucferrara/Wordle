@@ -1,4 +1,5 @@
 // import { IoIosClose } from "react-icons/io";
+import Tiles from "./Tiles";
 
 export default function Instructions({ show, onClose}: { show: boolean, onClose: any}) {
     return (
@@ -18,6 +19,18 @@ export default function Instructions({ show, onClose}: { show: boolean, onClose:
                             <li>The color of the tiles will change to show how close your guess was to the word.</li>
                         </ul>
                         <h6 className="text-bold">Examples</h6>
+                        <div>
+                            <Tiles values={["W", "O", "R", "D", "Y"]} setValues={null} colors={["Green", "W", "W", "W", "W"]}></Tiles>
+                            <p><b>W</b> is in the word and in the correct spot.</p>
+                        </div>
+                        <div>
+                            <Tiles values={["L", "I", "G", "H", "T"]} setValues={null} colors={["W", "Yellow", "W", "W", "W"]}></Tiles>
+                            <p><b>I</b> is in the word but in the wrong spot.</p>
+                        </div>
+                        <div>
+                            <Tiles values={["R", "O", "G", "U", "E"]} setValues={null} colors={["W", "W", "W", "Gray", "W"]}></Tiles>
+                            <p><b>U</b> is not in the word in any spot.</p>
+                        </div>
                         </div>
                     </div>
                 </div>

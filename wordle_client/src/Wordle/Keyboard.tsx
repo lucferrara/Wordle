@@ -1,3 +1,5 @@
+import { FiDelete } from "react-icons/fi";
+
 export default function Keyboard({keyboardColors, onKeyClick, onEnter, onDelete}: {keyboardColors: any, onKeyClick: any, onEnter: any, onDelete: any}) {
     const rows = [
         ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
@@ -37,7 +39,7 @@ export default function Keyboard({keyboardColors, onKeyClick, onEnter, onDelete}
             ))}
             <div className="d-flex justify-content-center mb-2"> 
                 <button className="btn btn-light mx-1" style={{width:'80px', height:'40px'}} onClick={onEnter}>Enter</button>
-                <button className="btn btn-light mx-1" style={{width:'80px', height:'40px'}} onClick={onDelete}>Delete</button>
+                <button className="btn btn-light mx-1" style={{width:'80px', height:'40px'}} onClick={onDelete}><FiDelete className="fs-4"/></button>
             </div>
         </div>
     );

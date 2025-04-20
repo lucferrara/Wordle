@@ -3,6 +3,7 @@ import Instructions from "./Instructions";
 import Tiles from "./Tiles";
 import * as client from "./client.ts";
 import VictoryScreen from "./VictoryScreen.tsx";
+import Keyboard from "./Keyboard.tsx";
 
 export default function Game() {
     let [gameId, setGameId] = useState(-1);
@@ -21,6 +22,26 @@ export default function Game() {
     const [colors, setColors] = useState(initColors);
     const [guessNum, setGuessNum] = useState(0);
 
+    const [keyboardColors, setKeyboardColors] = useState(
+        Object.fromEntries("abcdefghijklmnopqrstuvwxyz".split("").map(l => [l, ""]))
+    );
+
+    const colorPriority: Record<string, number> = {
+        "": 0,
+        "Gray": 1,
+        "Yellow": 2,
+        "Green": 3
+    };
+    
+    const updateKeyColor = (letter: string, color: string) => {
+        setKeyboardColors(prev => {
+            if (colorPriority[color] > colorPriority[prev[letter]]) {
+                return { ...prev, [letter]: color };
+            }
+            return prev; 
+        });
+    };
+
     const wordsRef = useRef(words);
     wordsRef.current = words; 
     
@@ -33,6 +54,8 @@ export default function Game() {
     const colorsRef = useRef(colors);
     colorsRef.current = colors; 
 
+    const keyboardColorsRef = useRef(keyboardColors);
+    keyboardColorsRef.current = keyboardColors;
     
     const setWordAt = (index: number, newWord: string[]) => {
         const updated = [...words];
@@ -72,10 +95,19 @@ export default function Game() {
                 let green_count = 0;
                 for(let i=0 ; i<5 ; i++)
                 {
-                    if(feedback[i] === "Green") green_count = green_count + 1;
+                    if(feedback[i] === "Green") {
+                        green_count = green_count + 1;
+                        
+                    }
                 }
                 setColorAt(guessNumRef.current, feedback.slice(0, 5));
                 setGuessNum(guessNumRef.current + 1);
+                for (let i = 0 ; i < 5 ; i++)
+                {
+                    const letter = currentGuess[i];
+                    const color = feedback[i];
+                    updateKeyColor(letter, color);
+                }
     
                 if (green_count === 5) {
                     setDone(true);
@@ -98,12 +130,12 @@ export default function Game() {
     }, [gameId]);
 
     return (
-        <div>
+        <div className="d-flex flex-column align-items-center text-center">
             <Instructions show={showInstructions} onClose={() => setShowInstructions(false)} />
             <VictoryScreen word={winningWord} numGuesses={guessNumRef.current}
                             show={done} playAgain={() => playAgain()} />
-            {gameId != -1 && words.map((word, i) => (
-                <div className="mb-2" key={i}>
+            {gameId !== -1 && words.map((word, i) => (
+                <div className="mb-4 d-flex justify-content-center" key={i}>
                     {i <= guessNum && <Tiles
                             values={word}
                             setValues={(newWord: string[]) => setWordAt(i, newWord)}
@@ -116,6 +148,8 @@ export default function Game() {
                     />}    
                 </div>
             ))}
+            {gameId !== -1 && <Keyboard keyboardColors={keyboardColorsRef.current}/>}
+            
             {!gameId && <h6>Loading...</h6>}
             
         </div>

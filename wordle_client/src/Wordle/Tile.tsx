@@ -10,7 +10,7 @@ export default function Tile({value, values, setValues, index, color}: {value: s
 
     return (
     <input type="text" 
-            maxLength={1} className={`form-control 
+            maxLength={1} className={`form-control p-0 border-0
                                     ${color == "Green" ? "bg-success" : ""}
                                     ${color == "Yellow" ? "bg-warning" : ""}
                                     ${color == "Gray" ? "bg-secondary" : ""}

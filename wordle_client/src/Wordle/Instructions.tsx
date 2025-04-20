@@ -1,4 +1,3 @@
-// import { IoIosClose } from "react-icons/io";
 import Tiles from "./Tiles";
 
 export default function Instructions({ show, onClose}: { show: boolean, onClose: any}) {

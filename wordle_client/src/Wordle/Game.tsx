@@ -2,22 +2,27 @@ import { useEffect, useRef, useState } from "react";
 import Instructions from "./Instructions";
 import Tiles from "./Tiles";
 import * as client from "./client.ts";
+import VictoryScreen from "./VictoryScreen.tsx";
 
 export default function Game() {
     let [gameId, setGameId] = useState(-1);
+    const [winningWord, setWinningWord] = useState("");
     const startGame = async () => {
         const id = await client.startGame(); 
         setGameId(id.gameId)
+        setDone(false);
     }
 
+    const initWords = Array(6).fill(null).map(() => ["", "", "", "", ""]);
+    const initColors = Array(6).fill(null).map(() => ["", "", "", "", ""]);
     const [showInstructions, setShowInstructions] = useState(true);
-
-    const [words, setWords] = useState(Array(6).fill(null).map(() => ["", "", "", "", ""]));
-    const [colors, setColors] = useState(Array(6).fill(null).map(() => ["", "", "", "", ""]));
+    const [done, setDone] = useState(false);
+    const [words, setWords] = useState(initWords);
+    const [colors, setColors] = useState(initColors);
     const [guessNum, setGuessNum] = useState(0);
 
     const wordsRef = useRef(words);
-    wordsRef.current = words; // Update the ref value every time words change
+    wordsRef.current = words; 
     
     const gameIdRef = useRef(gameId);
     gameIdRef.current = gameId;
@@ -28,6 +33,7 @@ export default function Game() {
     const colorsRef = useRef(colors);
     colorsRef.current = colors; 
 
+    
     const setWordAt = (index: number, newWord: string[]) => {
         const updated = [...words];
         updated[index] = newWord;
@@ -47,12 +53,29 @@ export default function Game() {
             
             if (currentGuess.length !== 5) return;
 
-            const feedback = await client.sendGuess(gameId, currentGuess);
+            const feedback = await client.sendGuess(gameIdRef.current, currentGuess);
+            let green_count = 0;
+            for(let i=0 ; i<feedback.length ; i++)
+            {
+                if(feedback[i] === "Green") green_count = green_count + 1;
+            }
             console.log(feedback);
             setColorAt(guessNumRef.current, feedback)
             setGuessNum(guessNumRef.current + 1);
+
+            if (green_count === 5) {
+                setDone(true);
+                setWinningWord(currentGuess);
+            }
         }
     }
+    
+    const playAgain = async () => {
+        await startGame(); 
+        setWords(initWords);
+        setColors(initColors);
+        setGuessNum(0);
+    };
     
     useEffect(() => {
         startGame();
@@ -71,6 +94,8 @@ export default function Game() {
     return (
         <div>
             <Instructions show={showInstructions} onClose={() => setShowInstructions(false)} />
+            <VictoryScreen word={winningWord} numGuesses={guessNum}
+                            show={done} playAgain={() => playAgain()} />
             {gameId != -1 && words.map((word, i) => (
                 <div className="mb-2" key={i}>
                     {i <= guessNum && <Tiles

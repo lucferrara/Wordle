@@ -22,7 +22,7 @@ export default function Keyboard({keyboardColors, onKeyClick, onEnter, onDelete}
     
     console.log(keyboardColors);
     return (
-        <div className="d-flex flex-column align-items-center mt-4">
+        <div className="d-flex flex-column align-items-center mt-4 me-4 pe-4">
             {rows.map((row, rowIndex) => (
                 <div className="d-flex justify-content-center mb-2" key={rowIndex}>
                     {row.map(letter => (

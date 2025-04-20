@@ -9,9 +9,13 @@ export default function Game() {
     let [gameId, setGameId] = useState(-1);
     const [winningWord, setWinningWord] = useState("");
     const startGame = async () => {
-        const id = await client.startGame(); 
-        setGameId(id.gameId)
-        setDone(false);
+        try {
+            const id = await client.startGame(); 
+            setGameId(id.gameId)
+            setDone(false);
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     const initWords = Array(6).fill(null).map(() => ["", "", "", "", ""]);
@@ -177,7 +181,7 @@ export default function Game() {
             ))}
             {gameId !== -1 && <Keyboard keyboardColors={keyboardColorsRef.current} onKeyClick={onKeyClick} onEnter={onEnter} onDelete={onDelete}/>}
             
-            {!gameId && <h6>Loading...</h6>}
+            {gameId === -1 && <h6 className="text-light fw-bold fs-1">Server Loading... (Refresh Required)</h6>}
             
         </div>
     )

@@ -67,12 +67,14 @@ export default function Wordle(app, db_conn) {
                 answerLetterCountMap.set(answer_letter, (answerLetterCountMap.get(answer_letter) || 0) + 1);
             }
             
+            let green_count = 0
             // First loop through and check for green. Update answer letter count map. 
             for (let i =0 ; i<guess_lower.length ; i++)
             {
                 if (guess_lower[i] == answer[i]) {
                     output[i] = "Green";
                     answerLetterCountMap.set(guess_lower[i], answerLetterCountMap.get(guess_lower[i]) - 1);
+                    green_count = green_count + 1;
                 }
             }
             // Next, loop through and check for yellow/gray
@@ -90,6 +92,11 @@ export default function Wordle(app, db_conn) {
                 else {
                     output[i] = "Gray";
                 }
+            }
+            // Returns the answer in the output if the player failed on their last guess. 
+            if(guessCol === "guess6" && green_count !== 5)
+            {
+                output.push(answer);
             }
             res.json(output);
 

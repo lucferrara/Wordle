@@ -22,9 +22,8 @@ export default function Game() {
     const [colors, setColors] = useState(initColors);
     const [guessNum, setGuessNum] = useState(0);
 
-    const [keyboardColors, setKeyboardColors] = useState(
-        Object.fromEntries("abcdefghijklmnopqrstuvwxyz".split("").map(l => [l, ""]))
-    );
+    const initKeyboardColors = Object.fromEntries("abcdefghijklmnopqrstuvwxyz".split("").map(l => [l, ""]));
+    const [keyboardColors, setKeyboardColors] = useState(initKeyboardColors);
 
     const colorPriority: Record<string, number> = {
         "": 0,
@@ -98,6 +97,7 @@ export default function Game() {
         setWords(initWords);
         setColors(initColors);
         setGuessNum(0);
+        setKeyboardColors(initKeyboardColors);
     };
 
     const onEnter = async () => {

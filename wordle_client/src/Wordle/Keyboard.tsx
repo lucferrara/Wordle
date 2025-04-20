@@ -1,4 +1,4 @@
-export default function Keyboard({keyboardColors}: {keyboardColors: any}) {
+export default function Keyboard({keyboardColors, onKeyClick, onEnter, onDelete}: {keyboardColors: any, onKeyClick: any, onEnter: any, onDelete: any}) {
     const rows = [
         ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
         ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
@@ -28,12 +28,17 @@ export default function Keyboard({keyboardColors}: {keyboardColors: any}) {
                             key={letter}
                             className={`btn ${colorClass(keyboardColors[letter])} mx-1`}
                             style={{ width: '40px', height: '40px' }}
+                            onClick={() => onKeyClick(letter)}
                         >
                             {letter.toUpperCase()}
                         </button>
                     ))}
                 </div>
             ))}
+            <div className="d-flex justify-content-center mb-2"> 
+                <button className="btn btn-light mx-1" style={{width:'80px', height:'40px'}} onClick={onEnter}>Enter</button>
+                <button className="btn btn-light mx-1" style={{width:'80px', height:'40px'}} onClick={onDelete}>Delete</button>
+            </div>
         </div>
     );
 }

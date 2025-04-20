@@ -42,6 +42,30 @@ export default function Game() {
         });
     };
 
+    const onKeyClick = (letter: string) => {
+        const newWord = [...words[guessNum]];
+        for (let i = 0; i < 5; i++) {
+            if (newWord[i] === "") {
+                newWord[i] = letter;
+                break;
+            }
+        }
+    
+        setWordAt(guessNum, newWord);
+    };
+
+    const onDelete = () => {
+        const newWord = [...words[guessNum]];
+        for (let i = 4; i >= 0 ; i--) {
+            if (newWord[i] !== "") {
+                newWord[i] = "";
+                break;
+            }
+        }
+    
+        setWordAt(guessNum, newWord);
+    };
+
     const wordsRef = useRef(words);
     wordsRef.current = words; 
     
@@ -75,6 +99,45 @@ export default function Game() {
         setColors(initColors);
         setGuessNum(0);
     };
+
+    const onEnter = async () => {
+        const currentGuess = wordsRef.current[guessNumRef.current].join("").toLowerCase().trim();    
+        if (currentGuess.length !== 5) return;
+
+        const feedback = await client.sendGuess(gameIdRef.current, currentGuess);
+        if (feedback === "INVALID GUESS")
+        {
+            return;
+        }
+        let green_count = 0;
+        for(let i=0 ; i<5 ; i++)
+        {
+            if(feedback[i] === "Green") {
+                green_count = green_count + 1;
+                
+            }
+        }
+        setColorAt(guessNumRef.current, feedback.slice(0, 5));
+        setGuessNum(guessNumRef.current + 1);
+        for (let i = 0 ; i < 5 ; i++)
+        {
+            const letter = currentGuess[i];
+            const color = feedback[i];
+            updateKeyColor(letter, color);
+        }
+
+        if (green_count === 5) {
+            setDone(true);
+            setWinningWord(currentGuess);
+        }
+
+        if (feedback.length > 5)
+        {
+            setGuessNum(guessNumRef.current + 2)
+            setDone(true);
+            setWinningWord(feedback[5]);
+        }
+    }
     
     useEffect(() => {
         startGame();
@@ -83,43 +146,7 @@ export default function Game() {
     useEffect(() => {
         const handleKeyDown = async (e: KeyboardEvent) => {
             if (e.key === "Enter") {
-                const currentGuess = wordsRef.current[guessNumRef.current].join("").toLowerCase().trim(); 
-                
-                if (currentGuess.length !== 5) return;
-    
-                const feedback = await client.sendGuess(gameIdRef.current, currentGuess);
-                if (feedback === "INVALID GUESS")
-                {
-                    return;
-                }
-                let green_count = 0;
-                for(let i=0 ; i<5 ; i++)
-                {
-                    if(feedback[i] === "Green") {
-                        green_count = green_count + 1;
-                        
-                    }
-                }
-                setColorAt(guessNumRef.current, feedback.slice(0, 5));
-                setGuessNum(guessNumRef.current + 1);
-                for (let i = 0 ; i < 5 ; i++)
-                {
-                    const letter = currentGuess[i];
-                    const color = feedback[i];
-                    updateKeyColor(letter, color);
-                }
-    
-                if (green_count === 5) {
-                    setDone(true);
-                    setWinningWord(currentGuess);
-                }
-    
-                if (feedback.length > 5)
-                {
-                    setGuessNum(guessNumRef.current + 2)
-                    setDone(true);
-                    setWinningWord(feedback[5]);
-                }
+                await onEnter(); 
             }
         }
 
@@ -148,7 +175,7 @@ export default function Game() {
                     />}    
                 </div>
             ))}
-            {gameId !== -1 && <Keyboard keyboardColors={keyboardColorsRef.current}/>}
+            {gameId !== -1 && <Keyboard keyboardColors={keyboardColorsRef.current} onKeyClick={onKeyClick} onEnter={onEnter} onDelete={onDelete}/>}
             
             {!gameId && <h6>Loading...</h6>}
             

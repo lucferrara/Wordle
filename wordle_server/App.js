@@ -9,6 +9,7 @@ const db_conn = mysql.createConnection({
 	user: process.env.DB_USER || "root",
 	password: process.env.DB_PASSWORD || "",
 	database: "wordle",
+	port: process.env.DB_PORT || 3306,
 }).promise();
 
 db_conn.connect(function(err) {

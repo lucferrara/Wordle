@@ -60,18 +60,20 @@ export default function Game() {
     useEffect(() => {
         const handleKeyDown = async (e: KeyboardEvent) => {
             if (e.key === "Enter") {
-                console.log(guessNum)
                 const currentGuess = wordsRef.current[guessNumRef.current].join("").toLowerCase().trim(); 
                 
                 if (currentGuess.length !== 5) return;
     
                 const feedback = await client.sendGuess(gameIdRef.current, currentGuess);
+                if (feedback === "INVALID GUESS")
+                {
+                    return;
+                }
                 let green_count = 0;
                 for(let i=0 ; i<5 ; i++)
                 {
                     if(feedback[i] === "Green") green_count = green_count + 1;
                 }
-                console.log(feedback);
                 setColorAt(guessNumRef.current, feedback.slice(0, 5));
                 setGuessNum(guessNumRef.current + 1);
     
@@ -83,7 +85,6 @@ export default function Game() {
                 if (feedback.length > 5)
                 {
                     setGuessNum(guessNumRef.current + 2)
-                    console.log(guessNumRef.current);
                     setDone(true);
                     setWinningWord(feedback[5]);
                 }

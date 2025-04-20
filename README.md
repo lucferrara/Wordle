@@ -10,9 +10,9 @@
 	<li>As the player makes guesses (either by typing and clicking enter or by using the on-screen keyboard and enter button), the tiles will change color based on how successful the guess was. Also, the letters on the keyboard will change color.</li>
 	<li>After the user makes 6 guesses or gets the word correct, the victory screen will appear. If the user did not get the word correct, the victory screen will show a defeat message, and reveal what the word was.</li>
 	<li>The player is then given the options to quit (which goes back to the main menu), or to play again.</li>
-	<li>I used the bootstrap library to implement the CSS styling for the application.</li>
-	<li>I used vite to initialize the react project, and npm to create the node server, and I created the MySQL database locally before migrating the dump file to AWS.</li>
-	<li>The entire project was developed using Linux.</li>
+	<li><b>Bootstrap</b> was used for styling the application</li>
+	<li>I used <b>Vite</b> to initialize the react project, and <b>npm</b> to create the node server, and I created the MySQL database locally before migrating the dump file to AWS.</li>
+	<li>The entire project was developed using <b>Linux</b>.</li>
 </ul>
 
 <h1>Deployment:</h1>

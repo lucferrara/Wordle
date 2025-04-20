@@ -7,7 +7,7 @@ export default function VictoryScreen({ word, numGuesses, show, playAgain,}: { w
                     <div className="modal-content">
                         <div className="modal-header justify-content-center text-center">
                             {numGuesses === 1 && <h3 className="modal-title text-success">Correct! You guessed <b>{word}</b> in {numGuesses} attempt!</h3>}
-                            {numGuesses > 1 && <h3 className="modal-title text-success">Correct! You guessed {word} in {numGuesses} attempts!</h3>}
+                            {numGuesses > 1 && numGuesses <= 6 && <h3 className="modal-title text-success">Correct! You guessed {word} in {numGuesses} attempts!</h3>}
                             {numGuesses > 6 && <h3 className="modal-title text-danger">Better luck next time! The correct word was: {word}.</h3>}
                         </div>
                         <div className="modal-body">

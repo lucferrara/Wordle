@@ -45,30 +45,6 @@ export default function Game() {
         updated[index] = newColors;
         setColors(updated); 
     }
-
-    const handleKeyDown = async (e: KeyboardEvent) => {
-        if (e.key === "Enter") {
-            console.log(guessNum)
-            const currentGuess = wordsRef.current[guessNumRef.current].join("").toLowerCase().trim(); 
-            
-            if (currentGuess.length !== 5) return;
-
-            const feedback = await client.sendGuess(gameIdRef.current, currentGuess);
-            let green_count = 0;
-            for(let i=0 ; i<feedback.length ; i++)
-            {
-                if(feedback[i] === "Green") green_count = green_count + 1;
-            }
-            console.log(feedback);
-            setColorAt(guessNumRef.current, feedback)
-            setGuessNum(guessNumRef.current + 1);
-
-            if (green_count === 5) {
-                setDone(true);
-                setWinningWord(currentGuess);
-            }
-        }
-    }
     
     const playAgain = async () => {
         await startGame(); 
@@ -82,11 +58,40 @@ export default function Game() {
     }, []);
 
     useEffect(() => {
-        if (gameId !== -1)
-        { 
-            window.addEventListener("keydown", handleKeyDown);
+        const handleKeyDown = async (e: KeyboardEvent) => {
+            if (e.key === "Enter") {
+                console.log(guessNum)
+                const currentGuess = wordsRef.current[guessNumRef.current].join("").toLowerCase().trim(); 
+                
+                if (currentGuess.length !== 5) return;
+    
+                const feedback = await client.sendGuess(gameIdRef.current, currentGuess);
+                let green_count = 0;
+                for(let i=0 ; i<5 ; i++)
+                {
+                    if(feedback[i] === "Green") green_count = green_count + 1;
+                }
+                console.log(feedback);
+                setColorAt(guessNumRef.current, feedback.slice(0, 5));
+                setGuessNum(guessNumRef.current + 1);
+    
+                if (green_count === 5) {
+                    setDone(true);
+                    setWinningWord(currentGuess);
+                }
+    
+                if (feedback.length > 5)
+                {
+                    setGuessNum(guessNumRef.current + 2)
+                    console.log(guessNumRef.current);
+                    setDone(true);
+                    setWinningWord(feedback[5]);
+                }
+            }
         }
-        else {
+
+        window.addEventListener("keydown", handleKeyDown);
+        return () => {
             window.removeEventListener("keydown", handleKeyDown);
         }
     }, [gameId]);
@@ -94,7 +99,7 @@ export default function Game() {
     return (
         <div>
             <Instructions show={showInstructions} onClose={() => setShowInstructions(false)} />
-            <VictoryScreen word={winningWord} numGuesses={guessNum}
+            <VictoryScreen word={winningWord} numGuesses={guessNumRef.current}
                             show={done} playAgain={() => playAgain()} />
             {gameId != -1 && words.map((word, i) => (
                 <div className="mb-2" key={i}>

@@ -81,7 +81,7 @@ export default function Wordle(app, db_conn) {
                 if (output[i] == "Green") {
                     continue;
                 }
-                
+
                 if(answer.indexOf(guess_lower[i]) > -1 && answerLetterCountMap.get(guess_lower[i]) > 0)
                 {
                     output[i] = "Yellow";
@@ -99,5 +99,5 @@ export default function Wordle(app, db_conn) {
     }
     
     app.get("/startgame", startGame); 
-    app.get("/sendguess/:gameId/:guess", sendGuess)
+    app.post("/sendguess/:gameId/:guess", sendGuess)
 }

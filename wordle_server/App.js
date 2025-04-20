@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import session from 'express-session';
 import 'dotenv/config';
 import Wordle from "./src/routes.js";
 import mysql from "mysql2";

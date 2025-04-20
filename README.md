@@ -3,7 +3,7 @@
 <h1>About</h1>
 <ul>
 	<li>The frontend of this Wordle application is built in React, and the backend is a NodeJS server.</li>
-	<li>The node server queries a database that I created and deployed to AWS RDS. There are two tables: one storing all 15,000 possible words, and another containing a history of games, along with their ids, answers, and guesses.</li>
+	<li>The node server queries a MySQL database that I created and deployed to AWS RDS. There are two tables: one storing all 15,000 possible words, and another containing a history of games, along with their ids, answers, and guesses.</li>
 	<li>The client communicates with the node server through two api endpoints. The first is /startgame, which adds a new entry to the games table. The second is /sendguess/:gameId/:guess, which updates the game in the games table, and returns the colors corresponding to that guess.</li>
 	<li>The client begins on the landing page, and by clicking Play, calls the /startgame endpoint, which initializes a new game. </li>
 	<li>After clicking play, the client lands on the Game page, with an instructions popup window. After they close the window, they are free to enter letters and send guesses. The player is prohibited from entering anything other than a letter, and can only make one guess at a time.</li>

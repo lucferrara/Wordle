@@ -25,6 +25,13 @@ export default function Wordle(app, db_conn) {
     const sendGuess = async (req, res) => {
         try {
             const { guess, gameId } = req.params;  
+            const check_word_query = 'SELECT COUNT(*) FROM words WHERE word = (?)';
+            const [wordCheckResults] = await db_conn.query(check_word_query, [guess]);
+            if(wordCheckResults[0]['COUNT(*)'] === 0)
+            {
+                res.json("INVALID GUESS");
+                return;
+            }
             const game_query = 'SELECT * FROM games WHERE game_id = (?)';
             const [gameResults] = await db_conn.query(game_query, [gameId]);
             const answer = gameResults[0].answer.toLowerCase();

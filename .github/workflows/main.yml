@@ -14,10 +14,6 @@ jobs:
         with:
           node-version: 22.12.0
       
-      - name: Get client env vars from Pi
-        run: |
-          cp /var/www/lucferrara.com/wordle/.env wordle_client/.env
-      
       - name: Build client
         run: |
           cd wordle_client

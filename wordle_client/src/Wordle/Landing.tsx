@@ -10,8 +10,13 @@ export default function Start() {
                 <h3>Get 6 chances to guess a 5-letter word.</h3>
             </div>
             <div className="text-center text-light pt-4 mt-4">
-                <a href="#/play" className="nav-link">
-                    <button className="btn btn-success">Play</button>
+                <a href="#/play" className="nav-link d-inline-block" style={{ width: "150px" }}>
+                    <button className="btn btn-success w-50">Play</button>
+                </a>
+                </div>
+                <div className="text-center text-light pt-4">
+                <a href="https://lucferrara.com/#/" className="nav-link d-inline-block" style={{ width: "150px" }}>
+                    <button className="btn btn-secondary w-50">Back</button>
                 </a>
             </div>
         </div>

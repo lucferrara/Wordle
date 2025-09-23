@@ -19,7 +19,8 @@ db_conn.connect(function(err) {
 
 const app = express(); 
 app.use(cors({origin: process.env.SITE_URL || "http://localhost:5173"}));
-app.use(express.json())
+app.use(express.json());
+app.set('trust proxy', 1);
 
 Wordle(app, db_conn);
 

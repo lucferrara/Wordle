@@ -1,6 +1,7 @@
 # Wordle
 
-<a href="https://lucferrara.com/wordle/">lucferrara.com/wordle/</a>
+Base URL: <a href="https://lucferrara.com/">lucferrara.com</a>
+Wordle URL: <a href="https://lucferrara.com/wordle/">lucferrara.com/wordle/</a>
 
 <h1>About</h1>
 <ul>

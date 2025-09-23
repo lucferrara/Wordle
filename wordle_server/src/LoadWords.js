@@ -15,7 +15,7 @@ const db_conn = mysql.createConnection({
 
 db_conn.connect(function(err) {
     if (err) throw err;
-    console.log("Connected to DB");
+    // console.log("Connected to DB");
   });
 
 const __filename = fileURLToPath(import.meta.url)
@@ -25,7 +25,7 @@ const filepath = path.join(__dirname, 'words.txt');
 
 fs.readFile(filepath, 'utf8', (err, data) => {
     if (err) {
-        console.log("Error reading file: ", err)
+        // console.log("Error reading file: ", err)
         return;
     };
 
@@ -37,11 +37,11 @@ fs.readFile(filepath, 'utf8', (err, data) => {
 
     db_conn.query(query, [values], (err, results) => {
         if (err) {
-            console.error("Error inserting words: ", err);
+            // console.error("Error inserting words: ", err);
             return;
         }
 
-        console.log(`Inserted ${results.affectedRows} words.`);
+        // console.log(`Inserted ${results.affectedRows} words.`);
         
         db_conn.end();
     });

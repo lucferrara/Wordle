@@ -20,7 +20,6 @@ export default function Keyboard({keyboardColors, onKeyClick, onEnter, onDelete}
         }
     };
     
-    console.log(keyboardColors);
     return (
         <div className="d-flex flex-column align-items-center mt-4 me-4 pe-4">
             {rows.map((row, rowIndex) => (

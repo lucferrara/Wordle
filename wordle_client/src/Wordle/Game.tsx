@@ -14,7 +14,7 @@ export default function Game() {
             setGameId(id.gameId)
             setDone(false);
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     }
 

@@ -15,7 +15,7 @@ export default function Wordle(app, db_conn) {
 
             res.json({gameId});
         } catch (err) {
-            console.log(err)
+            // console.log(err)
         }
     }
 
@@ -108,7 +108,7 @@ export default function Wordle(app, db_conn) {
             res.json(output);
 
         } catch (err) {
-            console.log(err); 
+            // console.log(err); 
         }
     }
     

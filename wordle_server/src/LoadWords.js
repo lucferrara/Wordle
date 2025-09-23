@@ -4,6 +4,8 @@ import fs from 'fs';
 import mysql from 'mysql2';
 import 'dotenv/config';
 
+require('dotenv').config({ path: '../.env' });
+
 const db_conn = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

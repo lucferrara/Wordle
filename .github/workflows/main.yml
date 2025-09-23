@@ -26,10 +26,6 @@ jobs:
 
           sudo rsync -av --delete --exclude '.env' --exclude 'node_modules' wordle_server/ /opt/api
 
-      - name: Install server dependencies 
-        run: | 
-          npm ci 
-      
       - name: Restart services 
         run: |   
           sudo systemctl daemon-reload || true

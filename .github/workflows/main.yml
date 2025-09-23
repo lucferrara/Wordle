@@ -22,9 +22,17 @@ jobs:
 
       - name: Deploy
         run: |
-          sudo rsync -av --delete --exclude='.env' wordle_client/dist/ /var/www/lucferrara.com/wordle/
+          sudo rsync -av --delete wordle_client/dist/ /var/www/lucferrara.com/wordle/
 
-          sudo rsync -av --delete --exclude='.env' wordle_server/ /opt/api
+          sudo rsync -av --delete --exclude '.env' --exclude 'node_modules' wordle_server/ /opt/api
 
+      - name: Install server dependencies 
+        run: | 
+          npm ci 
+      
+      - name: Restart services 
+        run: |   
+          sudo systemctl daemon-reload || true
+          sudo systemctl restart api
           sudo systemctl reload nginx || true
 

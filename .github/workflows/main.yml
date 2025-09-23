@@ -1,0 +1,33 @@
+name: Build on Pi runner
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+
+      - name: Build client
+        run: |
+          cd wordle_client
+          npm ci
+          npm run build
+
+      - name: Deploy
+        run: |
+          # Deploy client build output
+          sudo rsync -av --delete wordle_client/dist/ /var/www/lucferrara.com/wordle/
+
+          # Deploy server code (preserve directory name wordle_server)
+          sudo rsync -av --delete wordle_server/ /var/www/lucferrara.com/wordle/wordle_server/
+
+          # Reload nginx
+          sudo systemctl reload nginx || true
+

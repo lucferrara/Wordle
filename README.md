@@ -1,5 +1,7 @@
 # Wordle
 
+<a href="https://lucferrara.com/wordle/">lucferrara.com/wordle/</a>
+
 <h1>About</h1>
 <ul>
 	<li>The frontend of this Wordle application is built in <b>React with TypeScript</b>, and the backend is a <b>Node.js</b> server.</li>

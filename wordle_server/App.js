@@ -18,7 +18,7 @@ db_conn.connect(function(err) {
   });
 
 const app = express(); 
-app.use(cors({origin: process.env.NETLIFY_URL || "http://localhost:5173"}));
+app.use(cors({origin: process.env.SITE_URL || "http://localhost:5173"}));
 app.use(express.json())
 
 Wordle(app, db_conn);

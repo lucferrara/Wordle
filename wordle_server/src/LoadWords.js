@@ -2,9 +2,9 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import fs from 'fs';
 import mysql from 'mysql2';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 
-require('dotenv').config({ path: '../.env' });
+dotenv.config({ path: '../.env'});
 
 const db_conn = mysql.createConnection({
     host: process.env.DB_HOST,

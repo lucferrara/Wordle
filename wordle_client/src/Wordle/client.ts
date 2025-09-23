@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "https://lucferrara.com";
+const API = "https://api.lucferrara.com";
 
 export const startGame = async () => {
 	const { data } = await axios.get(`${API}/startgame`);

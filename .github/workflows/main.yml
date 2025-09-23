@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo rsync -av --delete --exclude='.env' wordle_client/dist/ /var/www/lucferrara.com/wordle/
 
-          sudo rsync -av --delete --exclude='.env' wordle_server/ /var/www/lucferrara.com/wordle/wordle_server/
+          sudo rsync -av --delete --exclude='.env' wordle_server/ /opt/api
 
           sudo systemctl reload nginx || true
 

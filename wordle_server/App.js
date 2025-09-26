@@ -10,7 +10,7 @@ const app = express();
 // --- DB POOL (not a single connection) ---
 export const pool = mysql.createPool({
   host: process.env.DB_HOST || '127.0.0.1',
-  user: process.env.DB_USER || 'wordle_app',   // avoid root; create a least-privileged user
+  user: process.env.DB_USER || 'wordle_app', 
   password: process.env.DB_PASSWORD || '',
   database: 'wordle',
   port: Number(process.env.DB_PORT) || 3306,
@@ -18,7 +18,7 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
   queueLimit: 0,
   enableKeepAlive: true,
-  keepAliveInitialDelay: 10_000,               // 10s ping to keep NAT/timeouts happy
+  keepAliveInitialDelay: 10_000,               // 10s ping to keep NAT/timeouts happy 
 });
 
 // Optional: quick health ping at startup
@@ -26,13 +26,11 @@ await pool.query('SELECT 1');
 
 // --- Express setup ---
 const allowedOrigin = process.env.SITE_URL || 'http://localhost:5173';
-app.use(cors({ origin: allowedOrigin }));      // If you need multiple origins, pass an array or function
+app.use(cors({ origin: allowedOrigin }));      
 app.use(express.json());
 
-// Only set this if you’re actually behind a proxy (nginx) and need real client IPs:
 app.set('trust proxy', 1);
 
-// Inject the pool into your routes instead of a single connection
 Wordle(app, pool);
 
 // Simple health endpoint for systemd/nginx checks

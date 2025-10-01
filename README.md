@@ -18,11 +18,5 @@ Wordle URL: <a href="https://lucferrara.com/wordle/">lucferrara.com/wordle/</a>
 	<li>The entire project was developed using <b>Linux</b>.</li>
 </ul>
 
-<h1>Deployment:</h1>
-<ul>
-    <li>Web App: <a>https://wordle-lucferrara.netlify.app/</a></li>
-    <li>Web Server: <a>https://wordle-api-pxi3.onrender.com/</a></li>
-</ul>
-
 <h1>Additional Information:</h1>
 <p>Wordle words list acquired from: https://github.com/tabatkins/wordle-list. I created the LoadWords.js script (found in the node server), to upload these words into my database table.</p>
